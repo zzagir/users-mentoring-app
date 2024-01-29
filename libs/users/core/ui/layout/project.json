@@ -1,5 +1,5 @@
 {
-  "name": "users-core-ui-layout",
+  "name": "layout",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/users/core/ui/layout/src",
   "prefix": "users",

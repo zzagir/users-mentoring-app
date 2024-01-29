@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'users-core-ui-layout',
+  displayName: 'layout',
   preset: '../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory: '../../../../../coverage/libs/users/core/ui/layout',

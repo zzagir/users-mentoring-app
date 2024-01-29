@@ -1,7 +1,7 @@
-# users-core-ui-layout
+# layout
 
 This library was generated with [Nx](https://nx.dev).
 
 ## Running unit tests
 
-Run `nx test users-core-ui-layout` to execute the unit tests.
+Run `nx test layout` to execute the unit tests.
