@@ -1,1 +1,2 @@
-export * from './lib/users-users-feature-users-list.module';
+export * from "./lib/users-list-container/users-list-container.component";
+export * from "./lib/users-list/users-list.component";
