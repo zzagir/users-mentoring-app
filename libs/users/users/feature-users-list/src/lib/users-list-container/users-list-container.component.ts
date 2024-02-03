@@ -1,10 +1,13 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, inject,
   ViewEncapsulation
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { UsersListComponent } from "../users-list/users-list.component";
+import { UsersEntity, UsersFacade } from "@users/users/users/data-access";
+import { map } from "rxjs";
+import { UsersListVM } from "../users-list/users-list-view-model";
 
 @Component({
   selector: "users-list-container",
@@ -16,4 +19,14 @@ import { UsersListComponent } from "../users-list/users-list.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListContainerComponent {
+  private readonly userFacade = inject(UsersFacade);
+  public readonly users$ = this.userFacade.allUsers$.pipe(
+    map<UsersEntity[], UsersListVM>(
+      (users) => ({ users })
+    )
+  );
+
+  constructor() {
+    this.userFacade.init();
+  }
 }

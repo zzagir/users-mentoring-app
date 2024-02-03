@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ApiService } from "@users/http";
 import { UsersListContainerComponent } from "@users/users/users/feature-users-list";
+import { UsersFacade } from "@users/users/users/data-access";
 
 @Component({
   selector: "users-home",
@@ -12,9 +13,5 @@ import { UsersListContainerComponent } from "@users/users/users/feature-users-li
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
-  private readonly apiService = inject(ApiService);
-
-  constructor() {
-    this.apiService.get("/users").subscribe(console.log);
-  }
+  
 }

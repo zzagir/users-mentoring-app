@@ -1,21 +1,27 @@
-import { Injectable, inject } from "@angular/core";
-import { createEffect, Actions, ofType } from "@ngrx/effects";
-import { switchMap, catchError, of } from "rxjs";
-import * as UsersActions from "./users.actions";
-import * as UsersFeature from "./users.reducer";
+import { inject } from '@angular/core';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { catchError, map, of, switchMap } from 'rxjs';
+import * as UsersActions from './users.actions';
+import { ApiService } from '@users/http';
+import { UsersEntity } from './users.models';
 
-@Injectable()
-export class UsersEffects {
-  private actions$ = inject(Actions);
+export const usersEffects = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const apiService = inject(ApiService);
 
-  init$ = createEffect(() =>
-    this.actions$.pipe(
+    return actions$.pipe(
       ofType(UsersActions.initUsers),
-      switchMap(() => of(UsersActions.loadUsersSuccess({ users: [] }))),
+      switchMap(() =>
+        apiService
+          .get<UsersEntity[]>('/users')
+          .pipe(map((users) => UsersActions.loadUsersSuccess({ users })))
+      ),
       catchError((error) => {
-        console.error("Error", error);
+        console.error('Error', error);
         return of(UsersActions.loadUsersFailure({ error }));
       })
-    )
-  );
-}
+    );
+  },
+  { functional: true }
+);

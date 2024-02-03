@@ -6,12 +6,12 @@ import { API_URL } from "@users/http";
 import { environment } from "../environments/environment.development";
 import { provideEffects } from "@ngrx/effects";
 import { provideState, provideStore } from "@ngrx/store";
-import { USERS_FEATURE_KEY, UsersFacade, usersReducer } from "@users/users/users/data-access";
-import { UsersEffects } from "../../../../libs/users/users/data-access/src/lib/+state/users.effects";
+import { USERS_FEATURE_KEY, UsersFacade, usersReducer, userEffects } from "@users/users/users/data-access";
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideEffects(UsersEffects),
+    provideEffects(userEffects),
     provideState(USERS_FEATURE_KEY, usersReducer),
     provideStore(),
     UsersFacade,
