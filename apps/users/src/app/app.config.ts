@@ -7,6 +7,7 @@ import { environment } from "../environments/environment.development";
 import { provideEffects } from "@ngrx/effects";
 import { provideState, provideStore } from "@ngrx/store";
 import { USERS_FEATURE_KEY, UsersFacade, usersReducer, userEffects } from "@users/users/users/data-access";
+import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 
 export const appConfig: ApplicationConfig = {
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideState(USERS_FEATURE_KEY, usersReducer),
     provideStore(),
     UsersFacade,
+    provideStoreDevtools(),
     provideRouter(appRoutes),
     provideHttpClient(),
     importProvidersFrom(),

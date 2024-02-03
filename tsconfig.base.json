@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@users/core/utils": ["libs/core/utils/src/index.ts"],
       "@users/home": ["libs/users/home/src/index.ts"],
       "@users/http": ["libs/core/http/src/index.ts"],
       "@users/layout": ["libs/users/core/ui/layout/src/index.ts"],

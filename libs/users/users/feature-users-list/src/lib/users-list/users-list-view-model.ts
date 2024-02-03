@@ -1,5 +1,6 @@
-import { UsersEntity } from "@users/users/users/data-access";
+import { UsersVM } from "../users-vm";
+import { DeepReadonly } from "@users/core/utils";
 
-export type UsersListVM = {
-  users: UsersEntity[]
-}
+export type UsersListVM = DeepReadonly<{
+  users: UsersVM[]
+}>
