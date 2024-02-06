@@ -6,10 +6,12 @@ import { UsersEntity } from "./users.models";
 
 export const USERS_FEATURE_KEY = "users";
 
+export type UsersStatus = "init" | "loading" | "loaded" | "error"
+
 export interface UsersState extends EntityState<UsersEntity> {
   selectedId?: string | number; // which Users record has been selected
-  loaded: boolean; // has the Users list been loaded
-  error?: string | null; // last known error (if any)
+  status: UsersStatus;
+  error: string | null;
 }
 
 export interface UsersPartialState {
@@ -21,20 +23,24 @@ export const usersAdapter: EntityAdapter<UsersEntity> =
 
 export const initialUsersState: UsersState = usersAdapter.getInitialState({
   // set initial required properties
-  loaded: false
+  status: "init",
+  error: null
 });
 
 const reducer = createReducer(
   initialUsersState,
   on(UsersActions.initUsers, (state) => ({
     ...state,
-    loaded: false,
-    error: null
+    status: "loading" as const
   })),
   on(UsersActions.loadUsersSuccess, (state, { users }) =>
-    usersAdapter.setAll(users, { ...state, loaded: true })
+    usersAdapter.setAll(users, { ...state, status: "loaded" as const })
   ),
-  on(UsersActions.loadUsersFailure, (state, { error }) => ({ ...state, error }))
+  on(UsersActions.loadUsersFailure, (state, { error }) => ({
+    ...state,
+    status: "error" as const,
+    error
+  }))
 );
 
 export function usersReducer(state: UsersState | undefined, action: Action) {

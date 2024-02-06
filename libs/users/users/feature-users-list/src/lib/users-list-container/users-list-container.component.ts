@@ -2,23 +2,25 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  ViewEncapsulation,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UsersListComponent } from '../users-list/users-list.component';
-import { UsersListContainerStore } from './users-list-container.store';
+  ViewEncapsulation
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { UsersListComponent } from "../users-list/users-list.component";
+import { UsersListContainerStore } from "./users-list-container.store";
 
 @Component({
-  selector: 'users-list-container',
+  selector: "users-list-container",
   standalone: true,
   imports: [CommonModule, UsersListComponent],
-  templateUrl: './users-list-container.component.html',
-  styleUrl: './users-list-container.component.scss',
+  templateUrl: "./users-list-container.component.html",
+  styleUrl: "./users-list-container.component.scss",
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [UsersListContainerStore],
+  providers: [UsersListContainerStore]
 })
 export class UsersListContainerComponent {
+  protected readonly status = status;
   private readonly componentStore = inject(UsersListContainerStore);
   public readonly users$ = this.componentStore.users$;
+  public readonly status$ = this.componentStore.status$;
 }

@@ -1,5 +1,5 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { USERS_FEATURE_KEY, UsersState, usersAdapter } from './users.reducer';
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { USERS_FEATURE_KEY, UsersState, usersAdapter } from "./users.reducer";
 
 // Lookup the 'Users' feature state managed by NgRx
 export const selectUsersState =
@@ -7,9 +7,9 @@ export const selectUsersState =
 
 const { selectAll, selectEntities } = usersAdapter.getSelectors();
 
-export const selectUsersLoaded = createSelector(
+export const selectUsersStatus = createSelector(
   selectUsersState,
-  (state: UsersState) => state.loaded
+  (state: UsersState) => state.status
 );
 
 export const selectUsersError = createSelector(

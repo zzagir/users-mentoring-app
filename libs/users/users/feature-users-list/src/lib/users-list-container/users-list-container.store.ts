@@ -1,23 +1,28 @@
-import { DeepReadonly } from '@users/core/utils';
-import { UsersEntity, UsersFacade } from '@users/users/users/data-access';
-import { ComponentStore } from '@ngrx/component-store';
-import { inject, Injectable } from '@angular/core';
-import { tap } from 'rxjs';
-import { UsersVM } from '../users-vm';
-import { usersVMAdapter } from '../users-vm.adapter';
+import { DeepReadonly } from "@users/core/utils";
+import { UsersEntity, UsersFacade } from "@users/users/users/data-access";
+import { ComponentStore } from "@ngrx/component-store";
+import { inject, Injectable } from "@angular/core";
+import { tap } from "rxjs";
+import { UsersVM } from "../users-vm";
+import { usersVMAdapter } from "../users-vm.adapter";
 
 type UsersListState = DeepReadonly<{
   users: UsersVM[];
 }>;
 
 const initialState: UsersListState = {
-  users: [],
+  users: []
 };
 
 @Injectable()
 export class UsersListContainerStore extends ComponentStore<UsersListState> {
-  private readonly usersFacade = inject(UsersFacade);
   public readonly users$ = this.select((state) => state.users);
+  private readonly usersFacade = inject(UsersFacade);
+  public readonly status$ = this.select(
+    this.usersFacade.status$,
+    status => status
+  );
+
 
   constructor() {
     super(initialState);
@@ -35,7 +40,7 @@ export class UsersListContainerStore extends ComponentStore<UsersListState> {
 
   private patchUsers(users: UsersEntity[]): void {
     this.patchState({
-      users: users.map((user) => usersVMAdapter.entityToVM(user)),
+      users: users.map((user) => usersVMAdapter.entityToVM(user))
     });
   }
 }
