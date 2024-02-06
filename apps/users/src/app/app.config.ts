@@ -10,6 +10,7 @@ import { provideEffects } from "@ngrx/effects";
 import { provideState, provideStore } from "@ngrx/store";
 import { USERS_FEATURE_KEY, UsersFacade, usersReducer, userEffects } from "@users/users/users/data-access";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 export const appConfig: ApplicationConfig = {
@@ -26,6 +27,6 @@ export const appConfig: ApplicationConfig = {
     {
       provide: API_URL,
       useValue: environment.API_URL
-    }
+    }, provideAnimationsAsync('noop')
   ]
 };
