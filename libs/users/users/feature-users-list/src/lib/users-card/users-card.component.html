@@ -1,0 +1,22 @@
+<mat-card class="user-card">
+  <mat-card-content>
+    <div>
+      {{user.username}}
+    </div>
+    <div>
+      {{user.name}}
+    </div>
+    <div>
+      {{user.email}}
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button color="primary" mat-raised-button>Редактировать</button>
+    <button
+      (click)="onDeleteUser()"
+      color="warn"
+      mat-raised-button
+    >Удалить
+    </button>
+  </mat-card-actions>
+</mat-card>

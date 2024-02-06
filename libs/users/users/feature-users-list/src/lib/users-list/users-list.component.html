@@ -1,11 +1,16 @@
-<p>users-list works!</p>
 <ng-container *ngIf="vm.status === 'loading'; else statusLoaded">
   Loading...
 </ng-container>
 
 <ng-template #statusLoaded>
   <ng-container *ngIf="vm.status === 'loaded'; else statusError">
-    {{vm | json}}
+    <div class="container">
+      <div class="row p-2">
+        <div *ngFor="let user of vm.users" class="col-md-4 mb-3">
+          <users-users-card (deleteUser)="onDeleteUser(user)" [user]="user" />
+        </div>
+      </div>
+    </div>
   </ng-container>
 </ng-template>
 

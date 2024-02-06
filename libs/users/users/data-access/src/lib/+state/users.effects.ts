@@ -33,3 +33,26 @@ export const usersEffects = createEffect(
   },
   { functional: true }
 );
+
+export const deleteUsers = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const apiService = inject(ApiService);
+
+    return actions$.pipe(
+      ofType(UsersActions.deleteUser),
+      switchMap(({ id }) =>
+        apiService.delete<UsersDTO[]>(`/users/${id}`).pipe(
+          map(() =>
+            UsersActions.deleteUserSuccess({ id })
+          )
+        )
+      ),
+      catchError((error) => {
+        console.error("Error", error);
+        return of(UsersActions.deleteUserFailed({ error }));
+      })
+    );
+
+  }, { functional: true }
+);
