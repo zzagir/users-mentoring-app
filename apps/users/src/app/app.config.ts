@@ -1,3 +1,5 @@
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { TuiRootModule } from "@taiga-ui/core";
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { appRoutes } from "./app.routes";
@@ -12,14 +14,15 @@ import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideEffects(userEffects),
+        provideAnimations(),
+        provideEffects(userEffects),
     provideState(USERS_FEATURE_KEY, usersReducer),
     provideStore(),
     UsersFacade,
     provideStoreDevtools(),
     provideRouter(appRoutes),
     provideHttpClient(),
-    importProvidersFrom(),
+    importProvidersFrom(TuiRootModule),
     {
       provide: API_URL,
       useValue: environment.API_URL

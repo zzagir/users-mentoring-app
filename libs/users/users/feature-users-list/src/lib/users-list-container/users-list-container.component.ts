@@ -19,7 +19,6 @@ import { UsersListContainerStore } from "./users-list-container.store";
   providers: [UsersListContainerStore]
 })
 export class UsersListContainerComponent {
-  protected readonly status = status;
   private readonly componentStore = inject(UsersListContainerStore);
   public readonly users$ = this.componentStore.users$;
   public readonly status$ = this.componentStore.status$;
