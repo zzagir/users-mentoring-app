@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter, Input, Output,
+  Component, EventEmitter, inject, Input, Output,
   ViewEncapsulation
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -11,6 +11,9 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatButtonModule } from "@angular/material/button";
 import { UsersCardComponent } from "../users-card/users-card.component";
 import { UsersVM } from "../users-vm";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { UsersDeleteUserDialogComponent } from "../users-delete-user-dialog/users-delete-user-dialog.component";
+import { UsersFacade } from "@users/users/users/data-access";
 
 @Component({
   selector: "users-list",
@@ -22,12 +25,23 @@ import { UsersVM } from "../users-vm";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent {
+  public dialog = inject(MatDialog);
+  public usersFacade = inject(UsersFacade);
+  
   @Input({ required: true })
   vm!: UsersListVM;
 
-  @Output() deleteUser = new EventEmitter();
-
   onDeleteUser(user: UsersVM) {
-    this.deleteUser.emit(user);
+    const dialogRef: MatDialogRef<UsersDeleteUserDialogComponent> = this.dialog.open(UsersDeleteUserDialogComponent, {
+      data: { name: user.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.usersFacade.deleteUser(user.id);
+      } else {
+        // Обработка события "Нет"
+      }
+    });
   }
 }
