@@ -25,9 +25,6 @@ import { UsersFacade } from "@users/users/users/data-access";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent {
-  public dialog = inject(MatDialog);
-  public usersFacade = inject(UsersFacade);
-
   @Input({ required: true })
   vm!: UsersListVM;
 

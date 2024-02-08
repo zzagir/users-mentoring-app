@@ -26,6 +26,6 @@ export const appConfig: ApplicationConfig = {
     {
       provide: API_URL,
       useValue: environment.API_URL
-    }, provideAnimationsAsync("noop")
+    }, provideAnimationsAsync("animations")
   ]
 };
