@@ -7,6 +7,7 @@ import {
 import { CommonModule } from "@angular/common";
 import { UsersListComponent } from "../users-list/users-list.component";
 import { UsersListContainerStore } from "./users-list-container.store";
+import { UsersVM } from "../users-vm";
 
 @Component({
   selector: "users-list-container",
@@ -23,5 +24,7 @@ export class UsersListContainerComponent {
   public readonly users$ = this.componentStore.users$;
   public readonly status$ = this.componentStore.status$;
 
-
+  onDeleteUser(user: UsersVM): void {
+    this.componentStore.deleteUser(user);
+  }
 }

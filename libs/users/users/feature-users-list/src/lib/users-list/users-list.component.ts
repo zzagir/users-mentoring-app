@@ -27,21 +27,13 @@ import { UsersFacade } from "@users/users/users/data-access";
 export class UsersListComponent {
   public dialog = inject(MatDialog);
   public usersFacade = inject(UsersFacade);
-  
+
   @Input({ required: true })
   vm!: UsersListVM;
 
-  onDeleteUser(user: UsersVM) {
-    const dialogRef: MatDialogRef<UsersDeleteUserDialogComponent> = this.dialog.open(UsersDeleteUserDialogComponent, {
-      data: { name: user.name }
-    });
+  @Output() deleteUser = new EventEmitter();
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.usersFacade.deleteUser(user.id);
-      } else {
-        // Обработка события "Нет"
-      }
-    });
+  onDeleteUser(user: UsersVM) {
+    this.deleteUser.emit(user);
   }
 }
