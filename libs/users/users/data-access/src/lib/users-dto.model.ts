@@ -6,5 +6,5 @@ export type UsersDTO = DeepReadonly<{
   name: string
   email: string
   username: string;
-  city?: string
+  city: string
 }>

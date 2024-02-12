@@ -51,9 +51,11 @@ const reducer = createReducer(
   on(UsersActions.editUserSuccess, (state, { userData }) => (
     usersAdapter.updateOne({
       id: userData.id, changes: {
+        id: userData.id,
         name: userData.name,
         email: userData.email,
-        username: userData.username
+        username: userData.username,
+        city: userData.city
       }
     }, { ...state, status: "loaded" as const })
   )),

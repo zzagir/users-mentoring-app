@@ -13,7 +13,7 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import { MatFormField } from "@angular/material/form-field";
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { CreateUserDTO, UsersFacade } from "@users/users/users/data-access";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -28,32 +28,36 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersEditUserDialogComponent {
-  private readonly usersFacade = inject(UsersFacade);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly dialogRef = inject(MatDialogRef<UsersEditUserDialogComponent>);
-  private readonly data = inject(MAT_DIALOG_DATA);
-  public readonly form: FormGroup = new FormGroup({
-    name: new FormControl(this.data.name, Validators.required),
-    username: new FormControl(this.data.username, Validators.required),
-    email: new FormControl(this.data.email, [Validators.required, Validators.email])
-  });
+  public readonly formGroup: FormGroup;
+  public readonly dialogRef = inject(MatDialogRef<UsersEditUserDialogComponent>);
+  public readonly data: {
+    id: string,
+    name: string,
+    email: string,
+    username: string
+    city: string
+  } = inject(MAT_DIALOG_DATA);
+  private readonly formBuilder = inject(FormBuilder);
 
-  save() {
-    if (this.form.valid) {
+  constructor() {
+    this.formGroup = this.formBuilder.group({
+      name: [this.data.name, Validators.required],
+      email: [this.data.email, [Validators.required, Validators.email]],
+      username: [this.data.username, [Validators.required]],
+      city: [this.data.city, [Validators.required]]
+    });
+  }
+
+  save(): void {
+    if (this.formGroup.valid) {
       const formData = {
-        name: this.form.value.name,
-        username: this.form.value.username,
-        email: this.form.value.email
+        id: this.data.id,
+        name: this.formGroup.value.name,
+        email: this.formGroup.value.email.trim().toLowerCase(),
+        username: this.formGroup.value.username,
+        city: this.formGroup.value.city
       };
       this.dialogRef.close(formData);
-      this.dialogRef.afterClosed().pipe(
-        takeUntilDestroyed(this.destroyRef)
-      ).subscribe(result => {
-        if (result) {
-          console.log(result);
-          this.usersFacade.editUser(result);
-        }
-      });
     }
   }
 

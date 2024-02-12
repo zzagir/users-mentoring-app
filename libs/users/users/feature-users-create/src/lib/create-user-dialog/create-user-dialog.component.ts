@@ -28,11 +28,10 @@ import { MatInput } from "@angular/material/input";
 export class CreateUserDialogComponent {
   public formGroup: FormGroup;
   public dialogRef = inject(MatDialogRef<CreateUserDialogComponent>);
+  public data: { name: string, email: string, username: string, city: string } = inject(MAT_DIALOG_DATA);
   private formBuilder = inject(FormBuilder);
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { name: string, email: string, username: string, city: string }
-  ) {
+  constructor() {
     this.formGroup = this.formBuilder.group({
       name: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
