@@ -28,8 +28,8 @@ export class ApiService {
     return this.http.post<T>(`${this.api_url}${url}`, JSON.stringify(data), { headers: ApiService.headers });
   }
 
-  public put<T, D>(url: string, data: D): Observable<T> {
-    return this.http.put<T>(`${this.api_url}${url}`, JSON.stringify(data), {
+  public patch<T, D>(url: string, data: D): Observable<T> {
+    return this.http.patch<T>(`${this.api_url}${url}`, JSON.stringify(data), {
       headers: ApiService.headers
     });
   }

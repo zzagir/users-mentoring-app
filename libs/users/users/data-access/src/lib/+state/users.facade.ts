@@ -2,8 +2,8 @@ import { Injectable, inject } from "@angular/core";
 import { select, Store, Action } from "@ngrx/store";
 
 import * as UsersActions from "./users.actions";
-import * as UsersFeature from "./users.reducer";
 import * as UsersSelectors from "./users.selectors";
+import { CreateUserDTO, EditUserDTO } from "./users.models";
 
 @Injectable()
 export class UsersFacade {
@@ -28,4 +28,12 @@ export class UsersFacade {
   deleteUser(id: number) {
     this.store.dispatch(UsersActions.deleteUser({ id }));
   };
+
+  editUser(userData: EditUserDTO) {
+    this.store.dispatch(UsersActions.editUser({ userData }));
+  }
+
+  addUser(userData: CreateUserDTO) {
+    this.store.dispatch(UsersActions.addUser({ userData }));
+  }
 }

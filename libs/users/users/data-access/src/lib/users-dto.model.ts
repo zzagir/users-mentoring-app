@@ -6,7 +6,5 @@ export type UsersDTO = DeepReadonly<{
   name: string
   email: string
   username: string;
-  city: string
+  city?: string
 }>
-
-export type CreateUserDTO = DeepReadonly<Omit<UsersDTO, "created_at" | "id">>

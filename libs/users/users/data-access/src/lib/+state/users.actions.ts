@@ -1,7 +1,7 @@
 import { createAction, props } from "@ngrx/store";
-import { UsersEntity } from "./users.models";
+import { CreateUserDTO, EditUserDTO, UsersEntity } from "./users.models";
 import { UsersVM } from "../../../../users-vm";
-import { CreateUserDTO, UsersDTO } from "../users-dto.model";
+import { UsersDTO } from "../users-dto.model";
 
 export const initUsers = createAction("[Users Page] Init");
 
@@ -25,22 +25,23 @@ export const deleteUserFailed = createAction(
   "[Users/Api] Delete User Failed", props<{ error: any }>()
 );
 
-export const createUser = createAction(
-  "[Users Page] Create User", props<UsersVM>()
-);
-export const createUserSuccess = createAction(
-  "[Users/Api] Create User Success", props<UsersVM>()
-);
-export const createUserFailed = createAction(
-  "[Users/Api] Create User Failed", props<{ error: any }>()
-);
 
 export const editUser = createAction(
-  "[Users Page] Edit User", props<UsersDTO>()
+  "[Users Page] Edit User", props<{ userData: EditUserDTO }>()
 );
 export const editUserSuccess = createAction(
-  "[Users/Api] Edit User Success", props<UsersDTO>()
+  "[Users/Api] Edit User Success", props<{ userData: EditUserDTO }>()
 );
 export const editUserFailed = createAction(
   "[Users/Api] Edit User Failed", props<{ error: any }>()
+);
+
+export const addUser = createAction(
+  "[Users Page] Add User", props<{ userData: CreateUserDTO }>()
+);
+export const addUserSuccess = createAction(
+  "[Users/Api] Add User Success", props<{ userData: CreateUserDTO }>()
+);
+export const addUserFailed = createAction(
+  "[Users/Api] Add User Failed", props<{ error: any }>()
 );

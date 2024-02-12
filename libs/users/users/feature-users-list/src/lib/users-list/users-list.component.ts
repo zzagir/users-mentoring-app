@@ -29,8 +29,13 @@ export class UsersListComponent {
   vm!: UsersListVM;
 
   @Output() deleteUser = new EventEmitter();
+  @Output() editUser = new EventEmitter();
 
   onDeleteUser(user: UsersVM) {
     this.deleteUser.emit(user);
+  }
+
+  onEditUser(user: UsersVM) {
+    this.editUser.emit(user);
   }
 }

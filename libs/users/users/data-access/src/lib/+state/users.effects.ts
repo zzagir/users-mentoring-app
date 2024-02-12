@@ -3,10 +3,9 @@ import { createEffect, Actions, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap } from "rxjs";
 import * as UsersActions from "./users.actions";
 import { ApiService } from "@users/http";
-import { UsersEntity } from "./users.models";
 import { usersDtoAdapter } from "../users-dto.adapter";
-import { CreateUserDTO, UsersDTO } from "../users-dto.model";
-import { UsersVM } from "../../../../users-vm";
+import { UsersDTO } from "../users-dto.model";
+import { CreateUserDTO, EditUserDTO } from "./users.models";
 
 export const usersEffects = createEffect(
   () => {
@@ -65,16 +64,39 @@ export const editUsers = createEffect(
 
     return actions$.pipe(
       ofType(UsersActions.editUser),
-      switchMap((user) =>
-        apiService.put<UsersDTO, UsersDTO>(`/users/${user.id}`, user).pipe(
-          map((userData) =>
-            UsersActions.editUserSuccess(userData)
+      switchMap(({ userData: user }) =>
+        apiService.patch<EditUserDTO, EditUserDTO>(`/users/${user.id}`, user).pipe(
+          map((user) =>
+            UsersActions.editUserSuccess({ userData: user })
           )
         )
       ),
       catchError((error) => {
         console.error("Error", error);
         return of(UsersActions.editUserFailed({ error }));
+      })
+    );
+
+  }, { functional: true }
+);
+
+export const addUser = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const apiService = inject(ApiService);
+
+    return actions$.pipe(
+      ofType(UsersActions.addUser),
+      switchMap(({ userData: user }) =>
+        apiService.post<CreateUserDTO, CreateUserDTO>(`/users`, user).pipe(
+          map((user) =>
+            UsersActions.addUserSuccess({ userData: user })
+          )
+        )
+      ),
+      catchError((error) => {
+        console.error("Error", error);
+        return of(UsersActions.addUserFailed({ error }));
       })
     );
 

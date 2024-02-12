@@ -48,10 +48,29 @@ const reducer = createReducer(
     ...state,
     status: "loading" as const
   })),
-  on(UsersActions.editUserSuccess, (state, user) => (
-    usersAdapter.addOne(user, state)
+  on(UsersActions.editUserSuccess, (state, { userData }) => (
+    usersAdapter.updateOne({
+      id: userData.id, changes: {
+        name: userData.name,
+        email: userData.email,
+        username: userData.username
+      }
+    }, { ...state, status: "loaded" as const })
   )),
   on(UsersActions.editUserFailed, (state, { error }) => ({
+    ...state,
+    status: "error" as const,
+    error
+  })),
+  on(UsersActions.addUser, (state) => ({
+    ...state,
+    status: "loading" as const
+  })),
+  on(UsersActions.addUserSuccess, (state, { userData }) => usersAdapter.addOne(userData, {
+    ...state,
+    status: "loaded" as const
+  })),
+  on(UsersActions.addUserFailed, (state, { error }) => ({
     ...state,
     status: "error" as const,
     error

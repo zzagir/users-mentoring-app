@@ -22,8 +22,13 @@ export class UsersCardComponent {
   user!: UsersVM;
 
   @Output() deleteUser = new EventEmitter();
+  @Output() editUser = new EventEmitter();
 
   onDeleteUser() {
     this.deleteUser.emit();
+  }
+
+  onEditUser() {
+    this.editUser.emit();
   }
 }
