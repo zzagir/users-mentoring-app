@@ -1,5 +1,5 @@
-import { UsersDTO } from './users-dto.model';
-import { UsersEntity } from './+state/users.models';
+import { UsersDTO } from "./users-dto.model";
+import { UsersEntity } from "./+state/users.models";
 
 type UsersDTOAdapter = {
   DTOtoEntity(dto: UsersDTO): UsersEntity;
@@ -8,22 +8,15 @@ type UsersDTOAdapter = {
 
 export const usersDtoAdapter: UsersDTOAdapter = {
   DTOtoEntity(dto) {
-    const { geo, ...otherAddressFields } = dto.address;
+    const { created_at, ...otherAddressFields } = dto;
     return {
-      ...dto,
-      address: {
-        ...otherAddressFields,
-      },
+      ...otherAddressFields
     };
   },
 
   entityToDTO(entity) {
     return {
-      ...entity,
-      address: {
-        ...entity.address,
-        geo: { lat: '', lng: '' },
-      },
+      ...entity
     };
-  },
+  }
 };

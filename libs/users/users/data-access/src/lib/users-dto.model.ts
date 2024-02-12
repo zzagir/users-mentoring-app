@@ -1,30 +1,12 @@
-export interface Address {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: Geo;
-}
+import { DeepReadonly } from "@users/core/utils";
 
-export interface Geo {
-  lat: string;
-  lng: string;
-}
-
-export interface Company {
-  name: string;
-  catchPhrase: string;
-  bs: string;
-}
-
-
-export type UsersDTO = {
+export type UsersDTO = DeepReadonly<{
   id: number;
-  name: string;
+  created_at?: number;
+  name: string
+  email: string
   username: string;
-  email: string;
-  address: Address;
-  phone: string;
-  website: string;
-  company: Company;
-}
+  city: string
+}>
+
+export type CreateUserDTO = DeepReadonly<Omit<UsersDTO, "created_at" | "id">>

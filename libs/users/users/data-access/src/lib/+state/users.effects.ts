@@ -5,7 +5,8 @@ import * as UsersActions from "./users.actions";
 import { ApiService } from "@users/http";
 import { UsersEntity } from "./users.models";
 import { usersDtoAdapter } from "../users-dto.adapter";
-import { UsersDTO } from "../users-dto.model";
+import { CreateUserDTO, UsersDTO } from "../users-dto.model";
+import { UsersVM } from "../../../../users-vm";
 
 export const usersEffects = createEffect(
   () => {
@@ -51,6 +52,29 @@ export const deleteUsers = createEffect(
       catchError((error) => {
         console.error("Error", error);
         return of(UsersActions.deleteUserFailed({ error }));
+      })
+    );
+
+  }, { functional: true }
+);
+
+export const editUsers = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const apiService = inject(ApiService);
+
+    return actions$.pipe(
+      ofType(UsersActions.editUser),
+      switchMap((user) =>
+        apiService.put<UsersDTO, UsersDTO>(`/users/${user.id}`, user).pipe(
+          map((userData) =>
+            UsersActions.editUserSuccess(userData)
+          )
+        )
+      ),
+      catchError((error) => {
+        console.error("Error", error);
+        return of(UsersActions.editUserFailed({ error }));
       })
     );
 

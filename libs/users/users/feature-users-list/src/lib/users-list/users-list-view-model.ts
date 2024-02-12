@@ -1,4 +1,4 @@
-import { UsersVM } from "../users-vm";
+import { UsersVM } from "../../../../users-vm";
 import { DeepReadonly } from "@users/core/utils";
 import { UsersStatus } from "@users/users/users/data-access";
 
